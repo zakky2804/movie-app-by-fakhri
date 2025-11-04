@@ -31,6 +31,10 @@ export async function GET(
       `${tbdbUrl}/movie/${id}?api_key=${apiKey}&page=1`
     );
 
+    if (!data) {
+      throw new Error("No data available");
+    }
+
     const result: MovieDetailForClient = pick(data, [
       "backdrop_path",
       "status",

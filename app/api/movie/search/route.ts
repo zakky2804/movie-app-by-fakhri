@@ -22,6 +22,10 @@ export async function GET(request: NextRequest) {
       `${tbdbUrl}/search/movie?query={${query}}&api_key=${apiKey}&page=1`
     );
 
+    if (!data) {
+      throw new Error("No data available");
+    }
+
     const results = data.results.map(({ id, poster_path, title }) => ({
       id,
       title,

@@ -24,6 +24,10 @@ export async function GET(
       `${tbdbUrl}/movie/${id}/credits?api_key=${apiKey}`
     );
 
+    if (!data) {
+      throw new Error("No data available");
+    }
+
     const result = data.cast.map(({ id, name, profile_path }) => ({
       id,
       name,

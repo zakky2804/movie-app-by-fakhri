@@ -32,6 +32,10 @@ export async function GET(
       false
     );
 
+    if (!data) {
+      throw new Error("No data available");
+    }
+
     const result = pick(data, [
       "backdrop_path",
       "status",

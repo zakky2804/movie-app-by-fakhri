@@ -18,6 +18,10 @@ export async function GET(request: NextRequest) {
       `${tbdbUrl}/movie/popular?api_key=${apiKey}&page=${page}`
     );
 
+    if (!data) {
+      throw new Error("No data available");
+    }
+
     const results = data.results.map(({ id, poster_path, title }) => ({
       id,
       title,

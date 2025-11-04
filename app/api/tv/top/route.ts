@@ -15,6 +15,10 @@ export async function GET() {
       `${tbdbUrl}/tv/top_rated?api_key=${apiKey}&page=1`
     );
 
+    if (!data) {
+      throw new Error("No data available");
+    }
+
     const results = data.results.map(({ id, poster_path, original_name }) => ({
       id,
       poster_path,

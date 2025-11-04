@@ -9,8 +9,7 @@ const Hero = async () => {
   const tmdbPosterUrl = process.env.TMDB_POSTER_IMAGE_URL;
 
   const res = await fetch(`${baseUrl}api/movie/heroslider`, {
-    next: { revalidate: 3600 },
-    // cache: "no-store",
+    cache: "no-store",
   });
 
   if (!res.ok) throw new Error("Failed to fetch users");

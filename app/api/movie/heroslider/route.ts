@@ -14,6 +14,11 @@ export async function GET() {
     const data = await getData<IMovie>(
       `${tbdbUrl}/movie/popular?api_key=${apiKey}&page=1`
     );
+
+    if (!data) {
+      throw new Error("No data available");
+    }
+
     const results = data.results.map(
       ({ id, poster_path, backdrop_path, overview, title }) => ({
         id,
