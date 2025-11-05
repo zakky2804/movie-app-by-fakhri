@@ -1,34 +1,31 @@
 import Link from "next/link";
 
-import { ITv } from "@/interface/tv";
 import { IMovie } from "@/interface/movie";
 import SkeletonImage from "./skeletons/SkeletonImage";
 import Slider from "../ui/Slider";
+import { getData } from "@/lib/utils";
 
 interface ListContainerProps {
   title: string;
   pathAPI: string;
   link: string;
-  callback?: React.ReactNode;
+  fallback?: React.ReactNode;
 }
 
 const ListContainer = async ({
   link,
   title,
   pathAPI,
-  callback,
+  fallback,
 }: ListContainerProps) => {
-  const baseurl = process.env.BASE_URL;
   const tmdbUrl = process.env.TMDB_POSTER_IMAGE_URL;
-  const res = await fetch(`${baseurl}api/${pathAPI}`, {
-    cache: "no-store",
-  });
+  const apiKey = process.env.TMDB_API_KEY;
+  const tbdbUrl = process.env.TMDB_BASE_URL;
 
-  if (!res.ok) throw new Error("Failed to fetch users");
+  if (!apiKey) throw new Error("API_KEY not found");
+  const data = await getData<IMovie>(`${tbdbUrl}/${pathAPI}?api_key=${apiKey}`);
 
-  type Media = IMovie | ITv;
-
-  const data: Media = await res.json();
+  if (!data) throw new Error("No data available");
   const results = data.results;
 
   return (
@@ -43,10 +40,10 @@ const ListContainer = async ({
         </Link>
       </section>
 
-      {results.length === 0 && callback}
+      {results.length === 0 && fallback}
       <Slider>
         <div className="flex gap-2">
-          {results.map((item) => (
+          {results.slice(0, 10).map((item) => (
             <Link
               href={`${link}/${item.id}`}
               key={item.id}
@@ -67,7 +64,9 @@ const ListContainer = async ({
                 className={`rounded-md brightness-75 overflow-hidden object-cover transition duration-200  hover:brightness-100 active:brightness-100 active:scale-95 aspect-[500/749] h-[282px] sm:h-auto sm:w-[162px]`}
               />
 
-              <h3 className="text-stone-100 truncate">{item.title}</h3>
+              <h3 className="text-stone-100 truncate">
+                {item.title || item.original_name}
+              </h3>
             </Link>
           ))}
         </div>

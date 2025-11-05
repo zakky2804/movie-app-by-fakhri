@@ -43,8 +43,8 @@ export default function RootLayout({
         <div className="mx-auto container">
           <Navbar />
           <main className="mb-16">{children}</main>
-          <TopLoader />
           <Footer />
+          <TopLoader />
         </div>
       </body>
     </html>

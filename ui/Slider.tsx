@@ -9,7 +9,6 @@ const Slider = ({ children }: React.PropsWithChildren) => {
 
   return (
     <div className="relative ">
-      {/* Embla viewport */}
       <div className="overflow-hidden" ref={emblaRef}>
         {children}
       </div>

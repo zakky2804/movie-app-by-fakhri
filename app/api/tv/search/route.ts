@@ -20,7 +20,8 @@ export async function GET(request: NextRequest) {
     }
 
     const data = await getData<ITv>(
-      `${tbdbUrl}/search/tv?query={${query}}&api_key=${apiKey}&page=${page}`
+      `${tbdbUrl}/search/tv?query={${query}}&api_key=${apiKey}&page=${page}`,
+      false
     );
 
     if (!data) {
@@ -29,11 +30,16 @@ export async function GET(request: NextRequest) {
 
     const results = data.results.map(({ id, poster_path, name }) => ({
       id,
-      name,
+      title: name,
       poster_path,
     }));
 
-    return NextResponse.json(results);
+    return NextResponse.json({
+      page: data.page,
+      results,
+      total_pages: data.total_pages,
+      total_results: data.total_results,
+    });
   } catch (error: unknown) {
     if (error instanceof Error) {
       return NextResponse.json({ error: error.message }, { status: 500 });

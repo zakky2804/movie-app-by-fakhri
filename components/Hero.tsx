@@ -3,22 +3,26 @@ import Link from "next/link";
 import BackdropImage from "@/ui/BackdropImage";
 import SkeletonImage from "./skeletons/SkeletonImage";
 import HeroSlider2 from "@/ui/HeroSlider2";
+import { getData } from "@/lib/utils";
 
 const Hero = async () => {
-  const baseUrl = process.env.BASE_URL;
+  const apiKey = process.env.TMDB_API_KEY;
+  const tbdbUrl = process.env.TMDB_BASE_URL;
   const tmdbPosterUrl = process.env.TMDB_POSTER_IMAGE_URL;
 
-  const res = await fetch(`${baseUrl}api/movie/heroslider`, {
-    cache: "no-store",
-  });
+  if (!apiKey) throw new Error("API_KEY not found");
 
-  if (!res.ok) throw new Error("Failed to fetch users");
-  const data: IMovie = await res.json();
+  const data = await getData<IMovie>(
+    `${tbdbUrl}/movie/popular?api_key=${apiKey}`
+  );
+
+  if (!data) throw new Error("No data available");
+
   const movies = data.results;
 
   return (
     <HeroSlider2>
-      {movies.map((movie, index) => (
+      {movies.slice(0, 10).map((movie, index) => (
         <div
           className="mb-10 relative h-[100dvh] sm:h-[600px] lg:h-[660px] xl:h-screen min-w-full  xl:max-h-[685px] "
           key={movie.id}
@@ -34,7 +38,6 @@ const Hero = async () => {
           />
 
           <div className="pt-32 pb-20 px-6 flex flex-col justify-end h-full md:h-fit sm:px-16  sm:flex-row  lg:justify-between  ">
-            {/* <SizeDisplay /> */}
             <section className="flex items-center w-full sm:max-w-[700px] md:max-w-4xl lg:max-w-[520px] xl:max-w-[700px]">
               <div className="">
                 <h1 className="mb-6 text-4xl sm:text-7xl font-bold text-title-text  line-clamp-2">
@@ -53,6 +56,7 @@ const Hero = async () => {
                   </a>
                   <Link
                     href={`/movies/${movie.id}`}
+                    scroll={true}
                     className="cta-button px-6 py-3 rounded-full border border-border hover:bg-primary duration-100 active:scale-90 active:bg-primary"
                   >
                     See Detail

@@ -1,9 +1,7 @@
 import Casts from "@/components/casts/Casts";
-import { MovieDetailForClient } from "@/interface/movie";
 import Badge from "@/ui/Badge";
-import Image from "next/image";
 import { Suspense } from "react";
-import { getDataFromClient } from "@/lib/utils";
+import { getData } from "@/lib/utils";
 import ListContainer from "@/components/ListContainer";
 import ListContainerSkeleton from "@/components/skeletons/ListContainerSkeleton";
 import TruncatedTitle from "@/ui/TruncatedTitle";
@@ -11,6 +9,9 @@ import TruncatedText from "@/ui/TruncatedText";
 import { Play } from "lucide-react";
 import { notFound } from "next/navigation";
 import SkeletonImage from "@/components/skeletons/SkeletonImage";
+import BackdropImage from "@/ui/BackdropImage";
+import FallbackNotFound from "@/components/FallbackNotFound";
+import { ITvDetail } from "@/interface/tv";
 
 export default async function TvDetailId({
   params,
@@ -18,27 +19,25 @@ export default async function TvDetailId({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const baseUrl = process.env.BASE_URL;
   const posterPathUrl = process.env.TMDB_POSTER_IMAGE_URL;
+  const apiKey = process.env.TMDB_API_KEY;
+  const tbdbUrl = process.env.TMDB_BASE_URL;
 
-  const data = await getDataFromClient<MovieDetailForClient>(
-    `${baseUrl}api/tv/${id}`
+  if (!apiKey) throw new Error("API_KEY not found");
+  const data = await getData<ITvDetail>(
+    `${tbdbUrl}/tv/${id}?api_key=${apiKey}&page=1`,
+    false
   );
 
   if (!data) return notFound();
-
   return (
     <>
       <div className="relative mb-8 min-h-[678px] sm:min-h-screen md:min-h-[711px] lg:h-[660px] xl:h-screen   xl:max-h-[685px]">
-        <Image
-          src={`https://image.tmdb.org/t/p/original/${data.backdrop_path}`}
-          width={1351}
-          height={685}
-          alt=""
-          className="object-cover -z-20 brightness-50 mx-auto  top-0 absolute h-full"
-          priority
+        <BackdropImage
+          backdropPath={`https://image.tmdb.org/t/p/original/${data.backdrop_path}`}
+          alt={`${data.name} backdrop`}
+          priority={true}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background -z-10"></div>
 
         <div className="pt-32 pb-20 px-6 sm:px-16 flex gap-x-10 xl:min-w-7xl max-w-[1351px]">
           <SkeletonImage
@@ -80,6 +79,13 @@ export default async function TvDetailId({
           title="Similar"
           link="/tv"
           pathAPI={`tv/${id}/similar`}
+          fallback={
+            <FallbackNotFound
+              title="No Similar Content Found"
+              message=" We couldn't find any movies or TV shows similar to what you were
+        looking for. Don't worry, there's still plenty to discover!"
+            />
+          }
         />
       </Suspense>
     </>

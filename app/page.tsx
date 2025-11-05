@@ -3,29 +3,34 @@ import { Suspense } from "react";
 import ListContainer from "@/components/ListContainer";
 import ListContainerSkeleton from "@/components/skeletons/ListContainerSkeleton";
 
+export const revalidate = 2_592_000;
+
 export default async function Home() {
   return (
-    <div>
+    <>
       <Hero />
       <Suspense fallback={<ListContainerSkeleton title="Trending Movies" />}>
         <ListContainer
           title="Trending Movies"
           link="/movies"
-          pathAPI="movie/populer"
+          pathAPI="movie/popular"
         />
       </Suspense>
 
       <Suspense fallback={<ListContainerSkeleton title="Top Movies" />}>
-        <ListContainer title="Top Movies" link="/movies" pathAPI="movie/top" />
+        <ListContainer
+          title="Top Movies"
+          link="/movies"
+          pathAPI="movie/top_rated"
+        />
       </Suspense>
-
       <Suspense fallback={<ListContainerSkeleton title="Populer Tv" />}>
-        <ListContainer title="Populer Tv" link="/tv" pathAPI="tv/populer" />
+        <ListContainer title="Populer Tv" link="/tv" pathAPI="tv/popular" />
       </Suspense>
 
       <Suspense fallback={<ListContainerSkeleton title="Top Tv" />}>
-        <ListContainer title="Top Tv" link="/tv" pathAPI="tv/top" />
+        <ListContainer title="Top Tv" link="/tv" pathAPI="tv/top_rated" />
       </Suspense>
-    </div>
+    </>
   );
 }

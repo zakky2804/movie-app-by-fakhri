@@ -7,11 +7,6 @@ interface NextFetchInit extends RequestInit {
   };
 }
 
-/**
- * Universal server-side fetch helper with revalidation support
- * - Safe for use inside Next.js Server Components or Route Handlers
- * - Automatically handles caching and error responses
- */
 export async function getData<T>(
   url: string,
   revalidate: boolean = true
@@ -19,9 +14,9 @@ export async function getData<T>(
   const fetchOptions: NextFetchInit = {};
 
   if (revalidate) {
-    fetchOptions.next = { revalidate: 86400 }; // 24 jam cache
+    fetchOptions.next = { revalidate: 2_592_000 };
   } else {
-    fetchOptions.cache = "no-store"; // no caching
+    fetchOptions.cache = "no-store";
   }
 
   try {
@@ -33,7 +28,7 @@ export async function getData<T>(
         const errorData = await res.json();
         errorMessage = errorData?.message || errorMessage;
       } catch {
-        // abaikan jika response bukan JSON
+        // ignore if response is not JSON
       }
       console.error("getData error:", errorMessage);
       throw NextResponse.json({ error: errorMessage }, { status: res.status });
@@ -46,10 +41,6 @@ export async function getData<T>(
   }
 }
 
-/**
- * Client-side fetch helper (no caching, no revalidation)
- * - Safe for client components and dynamic UI fetching
- */
 export async function getDataFromClient<T>(url: string): Promise<T | null> {
   try {
     const res = await fetch(url, { cache: "no-store" });

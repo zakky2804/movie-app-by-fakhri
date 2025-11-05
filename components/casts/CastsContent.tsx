@@ -1,7 +1,7 @@
-import { Cast } from "@/interface/movie";
-// import MySlider from "../slider/SliderProvider";
+import { Casts } from "@/interface/movie";
 import SkeletonImage from "../skeletons/SkeletonImage";
-import Slider from "../../ui/Slider";
+import Slider from "@/ui/Slider";
+import { getData } from "@/lib/utils";
 
 export default async function CastsContent({
   id,
@@ -10,13 +10,23 @@ export default async function CastsContent({
   id: string;
   type: "movie" | "tv";
 }) {
-  const baseUrl = process.env.BASE_URL;
-  const res = await fetch(`${baseUrl}/api/${type}/cast/${id}`, {
-    next: { revalidate: 3600 },
-  });
+  const apiKey = process.env.TMDB_API_KEY;
+  const tbdbUrl = process.env.TMDB_BASE_URL;
 
-  if (!res.ok) return <>User not Found</>;
-  const data: Cast[] = await res.json();
+  const results = await getData<Casts>(
+    `${tbdbUrl}/${type}/${id}/credits?api_key=${apiKey}`,
+    false
+  );
+
+  if (!results) {
+    return null;
+  }
+
+  const data = results.cast.map(({ id, name, profile_path }) => ({
+    id,
+    name,
+    profile_path,
+  }));
 
   return (
     <Slider>

@@ -17,14 +17,6 @@ export default function BackdropImage({
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
 
-  // const backdropUrl = backdropPath
-  //   ? `https://image.tmdb.org/t/p/original/${backdropPath}`
-  //   : null;
-
-  // if (!backdropUrl || hasError) {
-  //   return <BackdropFallback />;
-  // }
-
   return (
     <>
       {/* Loading skeleton */}

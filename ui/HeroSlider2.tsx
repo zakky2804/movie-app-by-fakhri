@@ -6,10 +6,9 @@ import { useEffect, useRef } from "react";
 const HeroSlider2 = ({ children }: React.PropsWithChildren) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "start",
-    loop: true, // supaya tidak berhenti di slide terakhir
+    loop: true,
   });
 
-  // Gunakan ref untuk menyimpan interval agar tidak terganggu re-render
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
@@ -18,21 +17,18 @@ const HeroSlider2 = ({ children }: React.PropsWithChildren) => {
     const startAutoScroll = () => {
       intervalRef.current = setInterval(() => {
         if (emblaApi) emblaApi.scrollNext();
-      }, 3000); // ⏱️ bergeser setiap 1 detik
+      }, 3000);
     };
 
     const stopAutoScroll = () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
 
-    // Mulai auto slide
     startAutoScroll();
 
-    // Stop auto slide saat user interaksi (best UX practice)
     emblaApi.on("pointerDown", stopAutoScroll);
     emblaApi.on("pointerUp", startAutoScroll);
 
-    // Cleanup saat unmount
     return () => stopAutoScroll();
   }, [emblaApi]);
 

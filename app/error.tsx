@@ -6,9 +6,9 @@ import { TriangleAlert } from "lucide-react";
 export default function ErrorPage() {
   return (
     <PageErrorMessage
-      errorCode={404}
+      errorCode={500}
       message={
-        "  Oops! The page you're looking for seems to have wandered off. Let's get you back on track."
+        "Oops! It looks like something went wrong with our servers. Our team has been notified and is working on fixing it."
       }
       icon={<TriangleAlert size={56} className="text-primary" />}
     />

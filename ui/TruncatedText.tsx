@@ -23,7 +23,6 @@ export default function TruncatedText({
         {text}
       </p>
 
-      {/* Button always below, not absolute */}
       <button
         onClick={() => setExpanded(!expanded)}
         className="mt-2 text-title-text text-sm font-medium hover:underline"

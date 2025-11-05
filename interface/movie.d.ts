@@ -77,6 +77,7 @@ export interface ISpokenLanguage {
 export interface IResultMovieOverview {
   id: number;
   poster_path: string;
+  original_name?: string;
   title: string;
   backdrop_path: string;
   overview?: string;

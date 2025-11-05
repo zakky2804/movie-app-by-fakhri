@@ -6,7 +6,7 @@ export default function LoadingMovieDetail() {
   return (
     <>
       <div
-        className="animate-pulse min-h-[678px]  sm:min-h-screen md:min-h-[711px] md:mb-8"
+        className="animate-pulse min-h-[678px]  sm:min-h-screen md:min-h-[711px] md:mb-8 xl:mb-[25px]"
         aria-hidden="true"
       >
         <div className="pt-32 pb-20 px-6 sm:px-16 flex gap-x-10 xl:min-w-7xl max-w-[1351px] ">
@@ -34,7 +34,7 @@ export default function LoadingMovieDetail() {
             <div className="w-[135px] h-10 bg-secondary rounded-md mt-3 sm:mt-3 md:mt-4" />
 
             <div className="mt-5 md:mt-6">
-              <div className="h-6 w-[72px] bg-secondary rounded-xl mb-[14px] sm:mb-[19px] md:mb-[13px]" />
+              <div className="h-6 w-[72px] bg-secondary rounded-xl mb-[14px] sm:mb-[19px] md:mb-[13px] xl:mb-2" />
               <div className="flex gap-2 overflow-hidden ">
                 <div className="aspect-[500/749] h-[113px] md:h-[117px]  bg-secondary rounded-xl shrink-0" />
                 <div className="aspect-[500/749] h-[113px] md:h-[117px]  bg-secondary rounded-xl shrink-0" />

@@ -1,12 +1,12 @@
-import { MovieDetailForClient } from "@/interface/movie";
-import { getDataFromClient } from "@/lib/utils";
+import { IMovieDetail } from "@/interface/movie";
+import { getData } from "@/lib/utils";
 
 import Casts from "@/components/casts/Casts";
 import { Suspense } from "react";
 import Badge from "@/ui/Badge";
 import ListContainer from "@/components/ListContainer";
 
-import NoSimilarContent from "@/components/NoSimilarContent";
+import FallbackNotFound from "@/components/FallbackNotFound";
 import TruncatedText from "@/ui/TruncatedText";
 import TruncatedTitle from "@/ui/TruncatedTitle";
 import { Play } from "lucide-react";
@@ -20,11 +20,14 @@ export default async function MovieDetailId({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const baseUrl = process.env.BASE_URL;
   const posterPathUrl = process.env.TMDB_POSTER_IMAGE_URL;
+  const apiKey = process.env.TMDB_API_KEY;
+  const tbdbUrl = process.env.TMDB_BASE_URL;
 
-  const data = await getDataFromClient<MovieDetailForClient>(
-    `${baseUrl}api/movie/${id}`
+  if (!apiKey) throw new Error("API_KEY not found");
+  const data = await getData<IMovieDetail>(
+    `${tbdbUrl}/movie/${id}?api_key=${apiKey}&page=1`,
+    false
   );
 
   if (!data) return notFound();
@@ -33,7 +36,7 @@ export default async function MovieDetailId({
     <>
       <div className="relative mb-0 min-h-[678px] sm:min-h-screen md:min-h-[711px] lg:h-[660px] xl:min-h-screen   xl:max-h-[685px] container">
         <BackdropImage
-          backdropPath={data.backdrop_path}
+          backdropPath={`https://image.tmdb.org/t/p/original/${data.backdrop_path}`}
           alt={`${data.title} backdrop`}
           priority={true}
         />
@@ -72,12 +75,19 @@ export default async function MovieDetailId({
           </section>
         </div>
       </div>
+
       <Suspense fallback={<ListContainerSkeleton title="Similar" />}>
         <ListContainer
           title="Similar"
           link="/movies"
           pathAPI={`movie/${id}/similar`}
-          callback={<NoSimilarContent />}
+          fallback={
+            <FallbackNotFound
+              title="No Similar Content Found"
+              message=" We couldn't find any movies or TV shows similar to what you were
+        looking for. Don't worry, there's still plenty to discover!"
+            />
+          }
         />
       </Suspense>
     </>

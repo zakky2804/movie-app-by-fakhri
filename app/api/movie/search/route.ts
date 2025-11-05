@@ -5,6 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const query = searchParams.get("query");
+  const page = searchParams.get("page") || "1";
 
   try {
     const apiKey = process.env.TMDB_API_KEY;
@@ -19,7 +20,8 @@ export async function GET(request: NextRequest) {
     }
 
     const data = await getData<IMovie>(
-      `${tbdbUrl}/search/movie?query={${query}}&api_key=${apiKey}&page=1`
+      `${tbdbUrl}/search/movie?query={${query}}&api_key=${apiKey}&page=${page}`,
+      false
     );
 
     if (!data) {
