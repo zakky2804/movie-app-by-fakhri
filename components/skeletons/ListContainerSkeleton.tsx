@@ -30,7 +30,9 @@ const ListContainerSkeleton = ({ title }: ListContainerSkeletonProps) => {
     <div className="animate-pulse pt-0 pb-5 px-4 sm:px-8 sm:pt-2 sm:pb-5 md:pb-[35px]">
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
-        <h2 className="text-3xl font-semibold text-stone-50">{title}</h2>
+        <h2 className="text-2xl sm:text-3xl font-semibold text-stone-50">
+          {title}
+        </h2>
         <button className="rounded-full border border-border px-4 py-2 font-medium font-Outfit text-stone-100 hover:bg-primary duration-200">
           View more
         </button>

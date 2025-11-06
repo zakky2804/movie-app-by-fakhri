@@ -16,7 +16,7 @@ export default function TruncatedText({
   return (
     <div className={` ${className}  `}>
       <p
-        className={`text-sm text-muted-foreground leading-relaxed transition-all duration-300 ${
+        className={`text-muted-foreground transition-all duration-300 ${
           expanded ? "" : `line-clamp-2`
         }`}
       >

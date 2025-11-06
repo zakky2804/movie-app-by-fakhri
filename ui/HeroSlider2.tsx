@@ -6,6 +6,7 @@ import { useEffect, useRef } from "react";
 const HeroSlider2 = ({ children }: React.PropsWithChildren) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "start",
+    containScroll: "trimSnaps",
     loop: true,
   });
 

@@ -34,7 +34,7 @@ export default async function MovieDetailId({
 
   return (
     <>
-      <div className="relative mb-0 min-h-[678px] sm:min-h-screen md:min-h-[711px] lg:h-[660px] xl:min-h-screen   xl:max-h-[685px] container">
+      <div className="relative mb-8 min-h-[678px] sm:min-h-screen md:min-h-[711px] lg:h-[660px] xl:min-h-screen   xl:max-h-[685px] container">
         <BackdropImage
           backdropPath={`https://image.tmdb.org/t/p/original/${data.backdrop_path}`}
           alt={`${data.title} backdrop`}

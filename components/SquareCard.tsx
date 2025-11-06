@@ -33,7 +33,7 @@ const SquareCard = ({
         classForContainer="aspect-[500/749]"
         className="rounded brightness-75 mb-2 bg-cover duration-200 hover:brightness-100 active:brightness-100 active:scale-95  aspect-[500/749]"
       />
-      <h3 className="text-stone-100 truncate">{item.title}</h3>
+      <p className="text-stone-100 truncate">{item.title}</p>
     </Link>
   );
 };

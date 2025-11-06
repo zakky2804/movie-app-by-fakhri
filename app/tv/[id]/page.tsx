@@ -32,7 +32,7 @@ export default async function TvDetailId({
   if (!data) return notFound();
   return (
     <>
-      <div className="relative mb-8 min-h-[678px] sm:min-h-screen md:min-h-[711px] lg:h-[660px] xl:h-screen   xl:max-h-[685px]">
+      <div className="relative mb-8 min-h-[678px] sm:min-h-screen md:min-h-[711px] lg:h-[660px] xl:min-h-screen  xl:max-h-[685px]">
         <BackdropImage
           backdropPath={`https://image.tmdb.org/t/p/original/${data.backdrop_path}`}
           alt={`${data.name} backdrop`}

@@ -50,9 +50,9 @@ export default async function CastsContent({
               classForContainer=" aspect-[500/749] h-[113px] md:h-auto md:w-[78px]  mb-2"
               className=" brightness-75 hover:brightness-100 mb-2 rounded-lg object-contain overflow-hidden  aspect-[500/749] h-[113px] md:h-auto md:w-[78px]"
             />
-            <h4 className="text-stone-100 line-clamp-2 text-sm z-10 text-center leading-tight">
+            <p className="text-stone-100 line-clamp-2 text-sm z-10 text-center leading-tight">
               {cast.name}
-            </h4>
+            </p>
           </div>
         ))}
       </div>

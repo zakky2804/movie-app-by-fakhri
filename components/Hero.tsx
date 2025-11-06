@@ -26,10 +26,6 @@ const Hero = async () => {
         <div
           className="mb-10 relative h-[100dvh] sm:h-[600px] lg:h-[660px] xl:h-screen min-w-full  xl:max-h-[685px] "
           key={movie.id}
-          style={{
-            contain: "layout paint",
-            contentVisibility: "auto",
-          }}
         >
           <BackdropImage
             backdropPath={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
@@ -40,7 +36,7 @@ const Hero = async () => {
           <div className="pt-32 pb-20 px-6 flex flex-col justify-end h-full md:h-fit sm:px-16  sm:flex-row  lg:justify-between  ">
             <section className="flex items-center w-full sm:max-w-[700px] md:max-w-4xl lg:max-w-[520px] xl:max-w-[700px]">
               <div className="">
-                <h1 className="mb-6 text-4xl sm:text-7xl font-bold text-title-text  line-clamp-2">
+                <h1 className="mb-6 text-4xl sm:text-6xl font-bold text-title-text  line-clamp-2 leading-[1.2]">
                   {movie.title}
                 </h1>
                 <p className="mb-8 line-clamp-3 sm:line-clamp-4 lg:line-clamp-3 xl:line-clamp-4">

@@ -9,7 +9,13 @@ export const dynamic = "force-static";
 
 const Footer = () => {
   return (
-    <footer className="relative h-[500px]   w-full ">
+    <footer
+      className="relative h-[500px]   w-full "
+      style={{
+        contain: "layout paint",
+        contentVisibility: "auto",
+      }}
+    >
       <BackdropImage
         backdropPath={ImageFooter}
         alt="Footer Image"

@@ -31,7 +31,9 @@ const ListContainer = async ({
   return (
     <section className="py-0 px-4 sm:px-8 sm:pt-2 pb-4">
       <section className="mb-8 flex justify-between items-center">
-        <h2 className="text-3xl font-semibold text-stone-50">{title}</h2>
+        <h2 className="text-2xl sm:text-3xl font-semibold text-title-text">
+          {title}
+        </h2>
         <Link
           href={link}
           className="rounded-full border border-border px-4 py-2 font-medium font-Outfit text-title-text  transition duration-200 hover:bg-primary active:scale-90 active:bg-primary "
@@ -64,9 +66,9 @@ const ListContainer = async ({
                 className={`rounded-md brightness-75 overflow-hidden object-cover transition duration-200  hover:brightness-100 active:brightness-100 active:scale-95 aspect-[500/749] h-[282px] sm:h-auto sm:w-[162px]`}
               />
 
-              <h3 className="text-stone-100 truncate">
+              <p className="text-stone-100 truncate">
                 {item.title || item.original_name}
-              </h3>
+              </p>
             </Link>
           ))}
         </div>
